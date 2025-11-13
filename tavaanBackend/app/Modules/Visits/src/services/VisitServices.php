@@ -6,13 +6,14 @@ use App\Modules\Visits\src\Models\Visits;
 use App\Modules\Visits\src\traits\ExcelTrait;
 use Carbon\Carbon;
 use holoo\modules\Bases\Helper\Responses;
+use holoo\modules\Bases\servers\sms\adapter\mediana\MedianaSmsGateway;
 use holoo\modules\Visits\Repositories\VisitInteface;
 
 class VisitServices
 {
     use  ExcelTrait;
 
-    public function __construct(protected Responses $response, protected VisitInteface $visits)
+    public function __construct(protected Responses $response, protected VisitInteface $visits , protected  MedianaSmsGateway $smsGateway)
     {
     }
 
@@ -62,7 +63,10 @@ class VisitServices
 
         $result = Visits::where('id', '=', $id)->first();
         if ($result) {
-            $result->update(['companions' => $companions, 'has_car' => $has_car, 'entry_time' => $entry_time, 'exit_time' => $exit_time]);
+
+             $this->smsGateway->sendText("09904289707","خروجی یا ورد شما با موفقعیت انجام شده");
+
+//            $result->update(['companions' => $companions, 'has_car' => $has_car, 'entry_time' => $entry_time, 'exit_time' => $exit_time]);
             return $this->response->success('', trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));

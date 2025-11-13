@@ -138,6 +138,7 @@ import { $ref } from 'unplugin-vue-macros/macros'
 import ApiService from '@/commons/servers/ApiService.js'
 import { myErrors } from '@/commons/helpers/errors.js'
 import { computed, onMounted } from 'vue'
+import {toast} from "vue3-toastify";
 
 let paginatetion = $ref([])
 let searchQuery = $ref('')
@@ -184,7 +185,9 @@ async function sendData(id, type) {
   }
   try {
     const response = await ApiService.post('updateVisits', btnData)
-    if (response.status === 'true') alert('ارسال شد ✅')
+    if (response.status === 'true'){
+         toast.success(response.messages);
+    }
   } catch (e) {
     myErrors(e)
   }

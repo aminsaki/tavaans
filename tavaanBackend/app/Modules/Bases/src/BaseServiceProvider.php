@@ -7,7 +7,9 @@ use holoo\modules\Bases\Http\Contracts\BaseRepository;
 use holoo\modules\Bases\Http\Contracts\BaseRepositoryInterface;
 use holoo\modules\Bases\servers\bank\PaymentGatewayInterface;
 use holoo\modules\Bases\servers\sms\adapter\Kavenegars\Kavenegar;
+use holoo\modules\Bases\servers\sms\adapter\mediana\MedianaSmsGateway;
 use holoo\modules\Bases\servers\sms\adapter\parsgreen\Sms;
+use holoo\modules\Bases\servers\sms\adapter\SmsGateway;
 use holoo\modules\Bases\servers\sms\SmsInterface;
 use holoo\modules\Bases\servers\webServers\adpter\ClientWordPress;
 use holoo\modules\Bases\servers\webServers\ClientWordPressInterface;
@@ -21,10 +23,10 @@ class BaseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
-        $this->app->bind(SmsInterface::class, Sms::class);
-        $this->app->bind(PaymentGatewayInterface::class , ZarinPal::class);
-        $this->app->bind(ClientWordPressInterface::class , ClientWordPress::class);
+        $this->app->bind(SmsGateway::class, MedianaSmsGateway::class);
+
     }
+
     /**
      * Make config punishment optional by merging the config from the package.
      */
