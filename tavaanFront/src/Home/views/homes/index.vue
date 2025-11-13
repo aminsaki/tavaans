@@ -54,7 +54,7 @@
                   v-model="list.companions"
                   class="min-w-[120px] bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm"
                 >
-                  <option value="0">0 نفر </option>
+                  <option value="" disabled="disabled">0 نفر </option>
                   <option value="1">1 نفر</option>
                   <option value="2">2 نفر</option>
                   <option value="3">3 نفر</option>
