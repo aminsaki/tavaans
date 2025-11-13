@@ -1,0 +1,7 @@
+{
+  "BASE_URL": "https://gate.ribbontehran.com/tavaanBackend/api/v1",
+  "REDIRECT": "https://gate.ribbontehran.com/tavaanBackend/",
+  "BACKEND_URL": "https://gate.ribbontehran.com/tavaanBackend/api/v1",
+  "URL": "https://gate.ribbontehran.com"
+}
+

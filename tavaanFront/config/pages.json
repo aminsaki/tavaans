@@ -1,0 +1,138 @@
+{
+  "pages": {
+    "dashboard": {
+      "id": 1,
+      "name": "dashboard",
+      "title": "مدیریت داشبورد",
+      "role": "admin",
+      "role2": "users",
+       "url": "/panel/dashboard"
+    },
+    "users": {
+      "id": 2,
+      "name": "users",
+      "title": "مدیریت کاربران",
+      "role": "admin"
+    },
+    "links": {
+      "id": 3,
+      "name": "links",
+      "title": " مدیریت ایجاد لینک ها",
+      "role": "admin",
+      "role2": "users"
+    },
+    "links_create": {
+      "id": 4,
+      "name": "links",
+      "title": "  ایجاد لینک ها",
+      "role": "admin",
+      "role2": "users"
+    },
+    "links_show": {
+      "id": 5,
+      "name": "links",
+      "title": "  مشاهد لینک ها",
+      "role": "admin",
+      "role2": "users"
+    },
+    "payments": {
+      "id":6 ,
+      "name": "payments",
+      "title": "مدیریت تراکنش ها",
+      "role": "admin"
+    },
+
+    "product": {
+      "id": 7,
+      "name": "product",
+      "title": "مدیریت محصولات",
+      "role": "admin"
+    },
+    "product_index": {
+      "id": 7,
+      "name": "product_index",
+      "title": "لیست محصولات",
+      "role": "admin"
+    },
+    "payments_show": {
+      "id": 8,
+      "name": "payments_show",
+      "title": "مشاهد تراکنش ها",
+      "role": "admin"
+    },
+    "smss": {
+      "id": 9,
+      "name": "smss",
+      "title": "مدیریت پیام ها",
+      "role": "admin"
+    },
+    "smss_create": {
+      "id": 10,
+      "name": "smss",
+      "title": "ایحاد پیام ها",
+      "role": "admin"
+    },
+    "sms_questionnaire": {
+      "id": 11,
+      "name": "questionnaire",
+      "title": "لیست پرسشنامه",
+      "role": "admin"
+    },
+
+    "questionnaire": {
+      "id": 12,
+      "name": "questionnaire",
+      "title": "مدیریت سنجی ها",
+      "role": "questionnaire"
+    },
+    "questionnaireShow": {
+      "id": 13,
+      "name": "questionnaire",
+      "title": " لیست  ",
+      "role": "admin"
+    },
+    "agents": {
+      "id": 14,
+      "name": "agents",
+      "title": " مدیریت نماینده ها ",
+      "role": "admin"
+    },
+    "agentsShow": {
+      "id": 15,
+      "name": "agents",
+      "title": "  پرداختی ها نماینده  ",
+      "role": "admin"
+    },
+    "overview": {
+      "id": 16,
+      "name": "agents",
+      "title":  "وضعیت کلی نظرات",
+      "role": "admin"
+    },
+    "agentCreate":{
+      "id": 17,
+      "name": "agents",
+      "title":  "ایجاد نمایید",
+      "role": "admin"
+    },
+    "Reports": {
+      "id": 18,
+      "name": "Reports",
+      "title": " مدیریت گزارش ها",
+      "role": "admin"
+    },
+    "Reportsview": {
+      "id": 19,
+      "name": "Reports",
+      "title":  "گزارش ها",
+      "role": "admin"
+    },
+    "AgentList": {
+      "id": 20,
+      "name": "Agents",
+      "title":  "لیست نماییده ",
+      "role": "admin"
+    }
+
+  }
+}

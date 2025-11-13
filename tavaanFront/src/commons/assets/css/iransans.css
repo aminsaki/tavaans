@@ -1,0 +1,113 @@
+@font-face {
+    font-family: 'WOFF IRANSansX-Thin';
+    src: url("../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Thin.woff");
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-UltraLight';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-UltraLight.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-Light';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Light.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-Regular';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Regular.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-Medium';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Medium.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-DemiBold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-DemiBold.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-Bold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Bold.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-ExtraBold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-ExtraBold.woff');
+}
+@font-face {
+    font-family: 'WOFF IRANSansX-Black';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff/IRANSansX-Black.woff');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Thin';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Thin.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-UltraLight';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-UltraLight.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Light';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Light.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Regular';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Regular.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Medium';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Medium.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-DemiBold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-DemiBold.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Bold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Bold.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-ExtraBold';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-ExtraBold.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansX-Black';
+    src: url('../fonts/iransans/licenses/Webfonts/fonts/woff2/IRANSansX-Black.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansXFaNum-Black';
+    src: url('../fonts/iransans/licenses/Farsinumerals/Webfonts/Woff2/IRANSansXFaNum-Black.woff2');
+}
+@font-face {
+    font-family: 'WOFF2 IRANSansXFaNum-Medium';
+    src: url('../fonts/iransans/licenses/Farsinumerals/Webfonts/Woff2/IRANSansXFaNum-Medium.woff2');
+}
+a{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+span {
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+.counter {
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+label {
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+.p-1 , .p-2 , .p-3 {
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+.btn{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+button{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+td{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+th{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}
+span{
+    font-family: WOFF2 IRANSansXFaNum-Medium,'WOFF2 IRANSansX-Medium', serif !important;
+}

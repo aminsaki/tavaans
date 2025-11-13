@@ -1,0 +1,9 @@
+{
+  "BASE_URL": "https://payment.holoostore.com/shoping_back//v1",
+  "REDIRECT": "https://payment.holoostore.com/",
+  "BACKEND_URL": "https://payment.holoostore.com/payment",
+  "URL": "https://payment.holoostore.com"
+}
+
+
+
