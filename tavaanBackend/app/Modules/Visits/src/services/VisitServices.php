@@ -22,13 +22,14 @@ class VisitServices
     {
 
         if ($reports = $this->visits->paginates(20)) {
-             $count = DB::table('visits')
-               ->selectRaw('COUNT(has_car) as cars, COUNT(*) as total_visits, SUM(companions) as sum_companions, SUM(1 + companions) as sum_total_with_companions')
+            $count = DB::table('visits')
+                ->where(['statusSms'=>'true'])
+                ->selectRaw('COUNT(has_car) as cars, COUNT(*) as total_visits, SUM(companions) as sum_companions, SUM(1 + companions) as sum_total_with_companions')
                 ->first();
 
             return $this->response->success(
-                [$reports,$count],
-              trans('validation.success'));
+                [$reports, $count],
+                trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));
     }
@@ -66,7 +67,7 @@ class VisitServices
         $command = $data['command'] ?? null;
         $parameters = [];
         $entry_time = Carbon::now();
-         $exit_time = Carbon::now();
+        $exit_time = Carbon::now();
 
         $visit = Visits::where('id', $id)->first();
 
@@ -84,7 +85,8 @@ class VisitServices
                 'companions' => $companions,
                 'has_car' => $has_car,
                 'entry_time' => $entry_time,
-                 'command'=>$command
+                'command' => $command,
+                'statusSms' => 'true'
             ]);
         }
         if ($method === 'exit_time' && empty($visit->exit_time)) {
@@ -97,7 +99,7 @@ class VisitServices
                 'companions' => $companions,
                 'has_car' => $has_car,
                 'exit_time' => $exit_time,
-                'command'=>$command
+                'command' => $command,
             ]);
         }
         if ($parameters && !empty($visit->phone)) {
