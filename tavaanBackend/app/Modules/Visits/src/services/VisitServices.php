@@ -13,7 +13,7 @@ class VisitServices
 {
     use  ExcelTrait;
 
-    public function __construct(protected Responses $response, protected VisitInteface $visits , protected  MedianaSmsGateway $smsGateway)
+    public function __construct(protected Responses $response, protected VisitInteface $visits, protected MedianaSmsGateway $smsGateway)
     {
     }
 
@@ -45,7 +45,9 @@ class VisitServices
             })->paginate(150);
 
         if ($query) {
-            return $this->response->success($query, trans('validation.success'));
+            return $this->response->success([
+                 $query ,
+            ], trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));
 
@@ -53,18 +55,13 @@ class VisitServices
 
     public function update(array $data)
     {
-        $id          = $data['id'] ?? null;
-        $method      = $data['method'] ?? null;
-        $companions  = $data['companions'] ?? null;
-        $has_car     = $data['has_car'] ?? null;
-
-        if (!$id || !$method) {
-            return $this->response->badRequest('', 'اطلاعات ارسالی ناقص است.');
-        }
-
+        $id = $data['id'] ?? null;
+        $method = $data['method'] ?? null;
+        $companions = $data['companions'] ?? null;
+        $has_car = $data['has_car'] ?? null;
+        $parameters = [];
         $entry_time = null;
-        $exit_time  = null;
-        $msg        = null;
+        $exit_time = null;
 
         $visit = Visits::where('id', $id)->first();
 
@@ -72,28 +69,33 @@ class VisitServices
             return $this->response->notFound('', trans('validation.notFound'));
         }
 //
-       if ($method === 'entry_time' &&  empty($visit->entry_time)) {
+        if ($method === 'entry_time' && empty($visit->entry_time)) {
             $entry_time = Carbon::now();
-            $msg = 'ورود شما با موفقیت انجام شد.';
-               $visit->update([
-            'companions' => $companions,
-            'has_car'    => $has_car,
-            'entry_time' => $entry_time,
-        ]);
+
+            $parameters = [
+                'code' => '806755',
+                'name' => $visit->fullName,
+            ];
+            $visit->update([
+                'companions' => $companions,
+                'has_car' => $has_car,
+                'entry_time' => $entry_time,
+            ]);
         }
-        if($method === 'exit_time' &&  empty($visit->exit_time)) {
+        if ($method === 'exit_time' && empty($visit->exit_time)) {
             $exit_time = Carbon::now();
-            $msg = 'خروج شما با موفقیت انجام شد.';
-         $visit->update([
-            'companions' => $companions,
-            'has_car'    => $has_car,
-            'exit_time'  => $exit_time,
-        ]);
+            $parameters = [
+                'code' => '806756',
+                'name' => $visit->fullName,
+            ];
+            $visit->update([
+                'companions' => $companions,
+                'has_car' => $has_car,
+                'exit_time' => $exit_time,
+            ]);
         }
-
-
-        if ($msg && !empty($visit->phone)) {
-            $this->smsGateway->sendText($visit->phone, $msg);
+        if ($parameters && !empty($visit->phone)) {
+            $this->smsGateway->sendPattern($visit->phone, $parameters);
         }
 
         return $this->response->success('', trans('validation.success'));
