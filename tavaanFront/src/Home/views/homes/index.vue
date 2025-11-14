@@ -9,7 +9,7 @@
               v-model="searchQuery"
               type="text"
               class="form-control w-full"
-              placeholder="جستجو بر اساس نام و نام‌خانوادگی"
+              placeholder="  جستجو بر نام و شماره تماس "
             />
           </div>
           <div class="col-12 col-md-6 d-flex gap-2 justify-content-start justify-content-md-end">
@@ -25,84 +25,124 @@
       </div>
 
       <div class="overflow-auto max-h-[85vh]">
-        <table class="table table-border border table-striped-columns text-center">
-          <thead class="bg-gray-100 sticky top-0 z-10">
-            <tr>
-              <th class="px-4 py-2 text-gray-700">نام و نام‌خانوادگی</th>
-              <th class="px-4 py-2 text-gray-700">شماره تماس</th>
-              <th class="px-4 py-2 text-gray-700">تعداد نفرات</th>
-              <th class="px-4 py-2 text-gray-700">خودرو</th>
-              <th class="px-4 py-2 text-gray-700">اکشن</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr
-              v-for="(list, index) in lists"
-              :key="list.id"
-              class="hover:bg-gray-50"
+  <table class="table table-border border table-striped-columns text-center mobile-table">
+    <thead class="bg-gray-100 sticky top-0 z-10">
+      <tr>
+        <th class="px-4 py-2 text-gray-700">نام و نام‌خانوادگی</th>
+        <th class="px-4 py-2 text-gray-700">شماره تماس</th>
+        <th class="px-4 py-2 text-gray-700">تعداد نفرات</th>
+        <th class="px-4 py-2 text-gray-700">خودرو</th>
+        <th class="px-4 py-2 text-gray-700">پیام ورود</th>
+        <th class="px-4 py-2 text-gray-700">پیام خروجی</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr
+        v-for="(list, index) in lists"
+        :key="list.id"
+        class="hover:bg-gray-50"
+      >
+        <!-- نام و نام‌خانوادگی -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="نام و نام‌خانوادگی"
+        >
+          {{ list.fullName }}
+        </td>
+
+        <!-- شماره تماس -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="شماره تماس"
+        >
+          {{ list.phone }}
+        </td>
+
+        <!-- تعداد نفرات -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="تعداد نفرات"
+        >
+          <select
+            v-model="list.companions"
+            class="w-full sm:min-w-[120px] bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm"
+          >
+            <option value="" disabled="disabled">0 نفر</option>
+            <option value="1">1 نفر</option>
+            <option value="2">2 نفر</option>
+            <option value="3">3 نفر</option>
+            <option value="4">4 نفر</option>
+          </select>
+        </td>
+
+        <!-- خودرو -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="خودرو"
+        >
+          <select
+            v-model="list.has_car"
+            class="w-full sm:min-w-[120px] bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm"
+          >
+            <option value="" disabled>انتخاب نمایید</option>
+            <option value="false">خیر</option>
+            <option value="true">بله</option>
+          </select>
+        </td>
+
+        <!-- پیام ورود -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="پیام ورود"
+        >
+          <div class="flex flex-col sm:flex-row gap-2 justify-center">
+            <button
+              v-if="!list.entry_time"
+              :disabled="list.entry_time ? true : false"
+              @click="sendData(list.id, 'entry_time')"
+              class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
             >
-              <td class="px-4 py-2 whitespace-nowrap" data-label="نام و نام‌خانوادگی">
-                {{ list.fullName }}
-              </td>
-              <td class="px-4 py-2 whitespace-nowrap" data-label="شماره تماس">
-                {{ list.phone }}
-              </td>
+              ارسال پیامک ورود
+            </button>
+            <span v-else class="w-full sm:w-auto">
+              <p class="btn btn-outline-success w-100">
+                {{ DateTimeFa(list.entry_time) }}
+              </p>
+            </span>
+          </div>
+        </td>
 
-              <!-- تعداد نفرات -->
-              <td class="px-4 py-2 whitespace-nowrap" data-label="تعداد نفرات">
-                <select
-                  v-model="list.companions"
-                  class="min-w-[120px] bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm"
-                >
-                  <option value="" disabled="disabled">0 نفر </option>
-                  <option value="1">1 نفر</option>
-                  <option value="2">2 نفر</option>
-                  <option value="3">3 نفر</option>
-                  <option value="4">4 نفر</option>
-                </select>
-              </td>
+        <!-- پیام خروجی -->
+        <td
+          class="px-4 py-2 whitespace-nowrap"
+          data-label="پیام خروجی"
+        >
+          <div class="flex flex-col sm:flex-row gap-2 justify-center">
+            <button
+              v-if="!list.exit_time"
+              @click="sendData(list.id, 'exit_time')"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+            >
+              ارسال پیامک خروجی
+            </button>
+            <span v-else class="w-full sm:w-auto">
+              <p class="btn btn-outline-primary w-100">
+                {{ DateTimeFa(list.exit_time) }}
+              </p>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-              <!-- خودرو -->
-              <td class="px-4 py-2 whitespace-nowrap" data-label="خودرو">
-                <select
-                  v-model="list.has_car"
-                  class="min-w-[120px] bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm"
-                >
-                  <option value="" disabled>انتخاب نمایید</option>
-                  <option value="false">خیر</option>
-                  <option value="true">بله</option>
-                </select>
-              </td>
-
-              <!-- دکمه‌ها -->
-
-              <td class="px-4 py-2 flex flex-col sm:flex-row gap-2 justify-center whitespace-nowrap">
-
-                <button
-                  :disabled=" (list.entry_time)? true : false "
-                  @click="sendData(list.id, 'entry_time')"
-                  class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  ارسال پیامک ورود
-                </button>
-                <button
-                  :disabled="(list.exit_time)?  true : false"
-                  @click="sendData(list.id, 'exit_time')"
-                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  ارسال پیامک خروجی
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
       <!-- Pagination -->
       <div
         class="card-footer d-flex justify-content-center align-items-center py-3 card"
         v-if="paginatetion"
-        style="direction: rtl;"
+        style="direction: rtl"
       >
         <nav aria-label="Page navigation">
           <ul class="pagination pagination-sm flex-wrap mb-0">
@@ -110,7 +150,12 @@
               <button class="page-link" @click="foreachPaginateUsers(1)">«</button>
             </li>
             <li class="page-item" :class="{ disabled: !paginatetion.prev_page_url }">
-              <button class="page-link" @click="foreachPaginateUsers(paginatetion.current_page - 1)">‹</button>
+              <button
+                class="page-link"
+                @click="foreachPaginateUsers(paginatetion.current_page - 1)"
+              >
+                ‹
+              </button>
             </li>
             <li
               v-for="page in visiblePages"
@@ -121,10 +166,20 @@
               <button class="page-link" @click="foreachPaginateUsers(page)">{{ page }}</button>
             </li>
             <li class="page-item" :class="{ disabled: !paginatetion.next_page_url }">
-              <button class="page-link" @click="foreachPaginateUsers(paginatetion.current_page + 1)">›</button>
+              <button
+                class="page-link"
+                @click="foreachPaginateUsers(paginatetion.current_page + 1)"
+              >
+                ›
+              </button>
             </li>
-            <li class="page-item" :class="{ disabled: paginatetion.current_page === paginatetion.last_page }">
-              <button class="page-link" @click="foreachPaginateUsers(paginatetion.last_page)">»</button>
+            <li
+              class="page-item"
+              :class="{ disabled: paginatetion.current_page === paginatetion.last_page }"
+            >
+              <button class="page-link" @click="foreachPaginateUsers(paginatetion.last_page)">
+                »
+              </button>
             </li>
           </ul>
         </nav>
@@ -138,7 +193,8 @@ import { $ref } from 'unplugin-vue-macros/macros'
 import ApiService from '@/commons/servers/ApiService.js'
 import { myErrors } from '@/commons/helpers/errors.js'
 import { computed, onMounted } from 'vue'
-import {toast} from "vue3-toastify";
+import { toast } from 'vue3-toastify'
+import { DateTimeFa } from '../../../commons/helpers/data.js'
 
 let paginatetion = $ref([])
 let searchQuery = $ref('')
@@ -151,7 +207,8 @@ const visiblePages = computed(() => {
   const current = paginatetion.current_page || 1
   const delta = 2
   const pages = []
-  for (let i = Math.max(1, current - delta); i <= Math.min(total, current + delta); i++) pages.push(i)
+  for (let i = Math.max(1, current - delta); i <= Math.min(total, current + delta); i++)
+    pages.push(i)
   if (pages[0] > 1) pages.unshift('...')
   if (pages[pages.length - 1] < total) pages.push('...')
   return pages
@@ -162,10 +219,10 @@ async function getReports() {
   try {
     const response = await ApiService.get(url)
     if (response.status === 'true') {
-      lists = response.data.data.map(item => ({
+      lists = response.data.data.map((item) => ({
         ...item,
         companions: item.companions || '',
-        has_car: item.has_car || ''
+        has_car: item.has_car || '',
       }))
       makePaginatetion(response.data)
     }
@@ -176,17 +233,18 @@ async function getReports() {
 
 // ارسال داده
 async function sendData(id, type) {
-  const selectedRow = lists.find(item => item.id === id)
+  const selectedRow = lists.find((item) => item.id === id)
   const btnData = {
     id,
     method: type,
     companions: selectedRow.companions,
-    has_car: selectedRow.has_car
+    has_car: selectedRow.has_car,
   }
   try {
     const response = await ApiService.post('updateVisits', btnData)
-    if (response.status === 'true'){
-         toast.success(response.messages);
+    if (response.status === 'true') {
+      toast.success(response.messages);
+      await getReports()
     }
   } catch (e) {
     myErrors(e)
@@ -204,7 +262,7 @@ function makePaginatetion(data) {
     total: data.total,
     to: data.last_page,
     count: data.to,
-    last_page: data.last_page
+    last_page: data.last_page,
   }
 }
 
@@ -218,10 +276,10 @@ async function onSearch() {
   try {
     const response = await ApiService.post('serachVisits', [{ data: searchQuery }])
     if (response.status === 'true') {
-      lists = response.data.data.map(item => ({
+      lists = response.data.data.map((item) => ({
         ...item,
         companions: item.companions || '',
-        has_car: item.has_car || ''
+        has_car: item.has_car || '',
       }))
       makePaginatetion(response.data)
     }
@@ -238,3 +296,56 @@ function resetSearch() {
 
 onMounted(() => getReports())
 </script>
+
+<style scoped>
+@media (max-width: 576px) {
+  .mobile-table thead {
+    display: none;
+  }
+
+  .mobile-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .mobile-table tbody tr:hover {
+    background-color: #f9fafb;
+  }
+
+  .mobile-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    font-size: 0.85rem;
+    white-space: normal !important;
+  }
+
+  .mobile-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-left: 0.5rem;
+    color: #374151;
+  }
+
+  /* روی موبایل همه‌ی input / select / button فول‌عرض بشن */
+  .mobile-table tbody td select,
+  .mobile-table tbody td button,
+  .mobile-table tbody td .btn {
+    width: 100%;
+  }
+
+  .mobile-table tbody td .btn + .btn {
+    margin-top: 0.25rem;
+  }
+}
+</style>

@@ -2,6 +2,7 @@
 
 namespace holoo\modules\Bases\servers\sms\adapter\mediana;
 
+use Dflydev\DotAccessData\Data;
 use GuzzleHttp\Exception\RequestException;
 use holoo\modules\Bases\servers\sms\adapter\SmsGateway;
 use Illuminate\Support\Facades\Http;
@@ -13,20 +14,19 @@ class MedianaSmsGateway implements SmsGateway
     {
         $url = 'https://api.mediana.ir/sms/v1/send/sms';
 
+
         $payload = [
             "type"        => "Informational",   // همون که دادی
             "recipients"  => [$mobile],        // آرایه از شماره‌ها
             "messageText" => $message,         // متن پیام
         ];
-
         try {
             $response = Http::withHeaders([
-              'X-API-KEY' => 'ycyYY8HI81T+hdaMObOrMjcfZvSnkmx3ROENdmUdQ=',
+              'X-API-KEY' => '27Gsunym8zB18zAdTDuKz6m8fYOn5sa0CBfPlHyuTc=',
               'Accept' => 'application/json',
               'Content-Type' => 'application/json',
             ])->post($url, $payload);
-
-            if (! $response->successful()) {
+            if (!$response->successful()) {
                 Log::error('Mediana sendText failed', [
                     'status'  => $response->status(),
                     'body'    => $response->body(),
@@ -34,7 +34,6 @@ class MedianaSmsGateway implements SmsGateway
                 ]);
                 return false;
             }
-
             return true;
         } catch (RequestException $e) {
             Log::error('Mediana sendText connection error', [
@@ -43,7 +42,6 @@ class MedianaSmsGateway implements SmsGateway
             return false;
         }
     }
-
 
 
     public function sendPattern(string $mobile, string $patternCode, array $params = []): bool

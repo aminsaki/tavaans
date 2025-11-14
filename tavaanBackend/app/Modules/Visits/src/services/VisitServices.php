@@ -51,25 +51,46 @@ class VisitServices
 
     }
 
-    public function update($data)
+    public function update(array $data)
     {
-        $id = $data['id'];
-        $method = $data['method'];
-        $companions = $data['companions'];
-        $has_car = !empty($data['has_car']) ? $data['has_car'] : "";
+        $id          = $data['id'] ?? null;
+        $method      = $data['method'] ?? null;
+        $companions  = $data['companions'] ?? null;
+        $has_car     = $data['has_car'] ?? null;
 
-        $entry_time = ($data['method'] === 'entry_time') ? Carbon::now() : "";
-        $exit_time = ($data['method'] === 'exit_time') ? Carbon::now() : "";
-
-        $result = Visits::where('id', '=', $id)->first();
-        if ($result) {
-
-             $this->smsGateway->sendText("09904289707","خروجی یا ورد شما با موفقعیت انجام شده");
-
-//            $result->update(['companions' => $companions, 'has_car' => $has_car, 'entry_time' => $entry_time, 'exit_time' => $exit_time]);
-            return $this->response->success('', trans('validation.success'));
+        if (!$id || !$method) {
+            return $this->response->badRequest('', 'اطلاعات ارسالی ناقص است.');
         }
-        return $this->response->notFound('', trans('validation.notFound'));
 
+        $entry_time = null;
+        $exit_time  = null;
+        $msg        = null;
+
+        if ($method === 'entry_time') {
+            $entry_time = Carbon::now();
+            $msg = 'ورود شما با موفقیت انجام شد.';
+        } elseif ($method === 'exit_time') {
+            $exit_time = Carbon::now();
+            $msg = 'خروج شما با موفقیت انجام شد.';
+        }
+
+        $visit = Visits::where('id', $id)->first();
+
+        if (!$visit) {
+            return $this->response->notFound('', trans('validation.notFound'));
+        }
+//
+        $visit->update([
+            'companions' => $companions,
+            'has_car'    => $has_car,
+            'entry_time' => $entry_time,
+            'exit_time'  => $exit_time,
+        ]);
+
+        if ($msg && !empty($visit->phone)) {
+            $this->smsGateway->sendText($visit->phone, $msg);
+        }
+
+        return $this->response->success('', trans('validation.success'));
     }
 }
