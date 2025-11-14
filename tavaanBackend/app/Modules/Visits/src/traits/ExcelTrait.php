@@ -19,8 +19,9 @@ trait ExcelTrait
             if ($index === 0) continue;
 
             Visits::create([
-                'fullName'  => $row[0] ?? '',
-                'phone'       => $row[1] ?? '',
+                'fullName' => $row[0] ?? '',
+                'phone' => $row[1] ?? '',
+                'command' => $row[2] ?? '',
             ]);
         }
 
