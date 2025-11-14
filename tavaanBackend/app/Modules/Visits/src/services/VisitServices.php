@@ -66,26 +66,31 @@ class VisitServices
         $exit_time  = null;
         $msg        = null;
 
-        if ($method === 'entry_time') {
-            $entry_time = Carbon::now();
-            $msg = 'ورود شما با موفقیت انجام شد.';
-        } elseif ($method === 'exit_time') {
-            $exit_time = Carbon::now();
-            $msg = 'خروج شما با موفقیت انجام شد.';
-        }
-
         $visit = Visits::where('id', $id)->first();
 
         if (!$visit) {
             return $this->response->notFound('', trans('validation.notFound'));
         }
 //
-        $visit->update([
+       if ($method === 'entry_time' &&  empty($visit->entry_time)) {
+            $entry_time = Carbon::now();
+            $msg = 'ورود شما با موفقیت انجام شد.';
+               $visit->update([
             'companions' => $companions,
             'has_car'    => $has_car,
             'entry_time' => $entry_time,
+        ]);
+        }
+        if($method === 'exit_time' &&  empty($visit->exit_time)) {
+            $exit_time = Carbon::now();
+            $msg = 'خروج شما با موفقیت انجام شد.';
+         $visit->update([
+            'companions' => $companions,
+            'has_car'    => $has_car,
             'exit_time'  => $exit_time,
         ]);
+        }
+
 
         if ($msg && !empty($visit->phone)) {
             $this->smsGateway->sendText($visit->phone, $msg);
