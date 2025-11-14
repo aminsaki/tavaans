@@ -3,7 +3,8 @@
     <div class="container d-flex gap-2 justify-content-end">
       <div class="col-6 col-md-2 btn btn-outline-primary">
         تعداد کل نفرات ({{
-             parseInt(countTotal?.total_visits) + parseInt(countTotal?.sum_companions)
+          (parseInt(countTotal?.total_visits || 0) +
+            parseInt(countTotal?.sum_companions || 0))
         }})
       </div>
       <div class="col-6 col-md-2 btn btn-outline-success">
