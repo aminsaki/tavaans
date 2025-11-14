@@ -15,8 +15,8 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-// import webUrl from "../config/dev.json"
- import webUrl from "../config/prod.json";
+import webUrl from "../config/dev.json"
+ // import webUrl from "../config/prod.json";
 
 let token = localStorage.getItem('token');
 const options = {

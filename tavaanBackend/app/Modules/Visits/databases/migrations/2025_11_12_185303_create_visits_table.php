@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('has_car')->default(false); // ماشین دارد یا نه
             $table->timestamp('entry_time')->nullable(); // زمان ورود
             $table->timestamp('exit_time')->nullable();  // زمان خروج
+            $table->text('command');
             $table->timestamps();
         });
     }

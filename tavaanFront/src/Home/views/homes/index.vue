@@ -1,18 +1,29 @@
 <template>
   <div class="container-fluid mx-auto p-4">
+    <div class="container d-flex gap-2 justify-content-end">
+      <div class="col-6 col-md-2 btn btn-outline-primary">
+        تعداد کل نفرات ({{
+          parseInt(countTotal?.total_visits) + parseInt(countTotal?.sum_companions)
+        }})
+      </div>
+      <div class="col-6 col-md-2 btn btn-outline-success">
+        تعداد کل خودرو ({{ parseInt(countTotal?.cars) }})
+      </div>
+    </div>
+
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
       <!-- فرم سرچ -->
       <div class="p-3 border-bottom">
         <form class="row g-2 align-items-center" @submit.prevent="onSearch">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 justify-start">
             <input
               v-model="searchQuery"
               type="text"
               class="form-control w-full"
-              placeholder="  جستجو بر نام و شماره تماس "
+              placeholder="  جستجو بر اساس نام و شماره تماس  "
             />
           </div>
-          <div class="col-12 col-md-6 d-flex gap-2 justify-content-start justify-content-md-end">
+          <div class="col-5 col-md-2 d-flex gap-2 justify-content-start justify-content-md-end">
             <button
               type="button"
               class="btn btn-outline-secondary px-3 py-1 text-sm"
@@ -23,6 +34,7 @@
           </div>
         </form>
       </div>
+
       <div class="overflow-auto max-h-[85vh]">
         <table class="table table-border border table-striped-columns text-center mobile-table">
           <thead class="bg-gray-100 sticky top-0 z-10">
@@ -31,6 +43,7 @@
               <th class="px-4 py-2 text-gray-700">شماره تماس</th>
               <th class="px-4 py-2 text-gray-700">تعداد نفرات</th>
               <th class="px-4 py-2 text-gray-700">خودرو</th>
+              <th class="px-4 py-2 text-gray-700">توضحیات</th>
               <th class="px-4 py-2 text-gray-700">پیام ورود</th>
               <th class="px-4 py-2 text-gray-700">پیام خروجی</th>
             </tr>
@@ -60,7 +73,6 @@
                   <option value="4">4 نفر</option>
                 </select>
               </td>
-
               <!-- خودرو -->
               <td class="px-4 py-2 whitespace-nowrap" data-label="خودرو">
                 <select
@@ -72,7 +84,12 @@
                   <option value="true">بله</option>
                 </select>
               </td>
-
+              <td class="px-4 py-2 whitespace-nowrap" data-label="توضیحات">
+              <textarea
+                class="input-group border"
+                v-model="list.command"
+              ></textarea>
+              </td>
               <!-- پیام ورود -->
               <td class="px-4 py-2 whitespace-nowrap" data-label="پیام ورود">
                 <div class="flex flex-col sm:flex-row gap-2 justify-center">
@@ -176,6 +193,8 @@ let paginatetion = $ref([])
 let searchQuery = $ref('')
 let lists = $ref([])
 let url = $ref('visits')
+let countTotal = $ref()
+let command = $ref()
 
 // Pagination
 const visiblePages = computed(() => {
@@ -195,12 +214,15 @@ async function getReports() {
   try {
     const response = await ApiService.get(url)
     if (response.status === 'true') {
-      lists = response.data.data.map((item) => ({
+      // console.log(response.data[1]);
+      countTotal = response.data[1]
+      lists = response.data[0].data.map((item) => ({
         ...item,
         companions: item.companions || '',
         has_car: item.has_car || '',
+        command: item.command
       }))
-      makePaginatetion(response.data)
+      makePaginatetion(response.data[0])
     }
   } catch (e) {
     myErrors(e)
@@ -212,6 +234,7 @@ async function sendData(id, type) {
   const selectedRow = lists.find((item) => item.id === id)
   const btnData = {
     id,
+    command: selectedRow.command,
     method: type,
     companions: selectedRow.companions,
     has_car: selectedRow.has_car,

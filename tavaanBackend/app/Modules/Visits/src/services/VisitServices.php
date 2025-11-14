@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use holoo\modules\Bases\Helper\Responses;
 use holoo\modules\Bases\servers\sms\adapter\mediana\MedianaSmsGateway;
 use holoo\modules\Visits\Repositories\VisitInteface;
+use Illuminate\Support\Facades\DB;
 
 class VisitServices
 {
@@ -21,8 +22,13 @@ class VisitServices
     {
 
         if ($reports = $this->visits->paginates(20)) {
+             $count = DB::table('visits')
+               ->selectRaw('COUNT(has_car) as cars, COUNT(*) as total_visits, SUM(companions) as sum_companions, SUM(1 + companions) as sum_total_with_companions')
+                ->first();
 
-            return $this->response->success($reports, trans('validation.success'));
+            return $this->response->success(
+                [$reports,$count],
+              trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));
     }
@@ -45,9 +51,7 @@ class VisitServices
             })->paginate(150);
 
         if ($query) {
-            return $this->response->success([
-                 $query ,
-            ], trans('validation.success'));
+            return $this->response->success($query, trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));
 
@@ -59,9 +63,10 @@ class VisitServices
         $method = $data['method'] ?? null;
         $companions = $data['companions'] ?? null;
         $has_car = $data['has_car'] ?? null;
+        $command = $data['command'] ?? null;
         $parameters = [];
-        $entry_time = null;
-        $exit_time = null;
+        $entry_time = Carbon::now();
+         $exit_time = Carbon::now();
 
         $visit = Visits::where('id', $id)->first();
 
@@ -70,7 +75,6 @@ class VisitServices
         }
 //
         if ($method === 'entry_time' && empty($visit->entry_time)) {
-            $entry_time = Carbon::now();
 
             $parameters = [
                 'code' => '806755',
@@ -80,10 +84,11 @@ class VisitServices
                 'companions' => $companions,
                 'has_car' => $has_car,
                 'entry_time' => $entry_time,
+                 'command'=>$command
             ]);
         }
         if ($method === 'exit_time' && empty($visit->exit_time)) {
-            $exit_time = Carbon::now();
+
             $parameters = [
                 'code' => '806756',
                 'name' => $visit->fullName,
@@ -92,6 +97,7 @@ class VisitServices
                 'companions' => $companions,
                 'has_car' => $has_car,
                 'exit_time' => $exit_time,
+                'command'=>$command
             ]);
         }
         if ($parameters && !empty($visit->phone)) {

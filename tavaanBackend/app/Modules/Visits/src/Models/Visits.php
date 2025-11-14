@@ -18,6 +18,7 @@ class Visits extends Model
        'has_car',
        'entry_time',
        'exit_time',
+       'command'
    ];
 
     protected $casts = [
