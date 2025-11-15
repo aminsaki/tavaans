@@ -21,4 +21,8 @@ class VisitsRepositories extends BaseRepository  implements VisitInteface
             ->latest('id')
             ->paginate(50);
     }
+   public function myPaginates($pages)
+    {
+        return $this->model::orderByRaw("CASE WHEN statusSms = true THEN false ELSE true END")->paginate($pages);
+    }
 }

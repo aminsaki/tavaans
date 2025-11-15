@@ -17,11 +17,11 @@ class VisitServices
     public function __construct(protected Responses $response, protected VisitInteface $visits, protected MedianaSmsGateway $smsGateway)
     {
     }
-
     public function getVisitsData($data): \Illuminate\Http\JsonResponse
     {
 
-        if ($reports = $this->visits->paginates(20)) {
+      if($reports = $this->visits->myPaginates(20)) {
+
             $count = DB::table('visits')
                 ->where(['statusSms'=>'true'])
                 ->selectRaw('COUNT(has_car) as cars, COUNT(*) as total_visits, SUM(companions) as sum_companions, SUM(1 + companions) as sum_total_with_companions')
