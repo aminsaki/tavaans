@@ -8,25 +8,38 @@ use Illuminate\Http\Request;
 
 class VisitController extends Controller
 {
-    public function __construct(protected   VisitServices $visitServices){}
+    public function __construct(protected VisitServices $visitServices)
+    {
+    }
 
     public function index(Request $request)
     {
-
-        return   $this->visitServices->getVisitsData($request->all());
+        return $this->visitServices->getVisitsData($request->all());
 
     }
+
     public function serachVisits(Request $request)
     {
-        return  $this->visitServices->serachVisits($request->all());
+        return $this->visitServices->serachVisits($request->all());
     }
 
-  public function store(Request $request){
+    public function store(Request $request)
+    {
 
-     return $this->visitServices->createVisiteData($request->all());
-  }
-   public function updateVisits(Request $request){
+        return $this->visitServices->createVisiteData($request->all());
+    }
 
-       return $this->visitServices->update($request->all());
-   }
+    public function updateVisits(Request $request)
+    {
+
+        return $this->visitServices->update($request->all());
+    }
+
+    public function exportExcel()
+    {}
+
+    public function show()
+    {
+        return $this->visitServices->excels();
+    }
 }

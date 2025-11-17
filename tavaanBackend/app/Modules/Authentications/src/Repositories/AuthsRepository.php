@@ -19,12 +19,12 @@ class AuthsRepository extends BaseRepository implements AuthsInterface
     {
         Log::info('loginAgent', ['data' => $data]);
 
-        if (Auth::attempt(['mobile' => $data['mobile'], 'password' => $data['mobile']], true)) {
+        if (Auth::attempt(['mobile' => $data['mobile'], 'password' => $data['password']], true)) {
 
             $token = Auth::user()->createToken('Holoo API')->accessToken;
 
             return Responses::create()->successLogin([
-                'list' => $this->firstWhereModle(['id' => Auth::id()], 'roles'),
+                'list' => $this->find( Auth::id()),
                 'access_token' => 'Bearer ' . $token,
                 'token_type' => 'Bearer',
             ], trans('auth.success-message'), 'Bearer ' . $token);

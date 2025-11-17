@@ -3,12 +3,17 @@
     <div class="container d-flex gap-2 justify-content-end">
       <div class="col-6 col-md-2 btn btn-outline-primary">
         تعداد کل نفرات ({{
-          (parseInt(countTotal?.total_visits || 0) +
-            parseInt(countTotal?.sum_companions || 0))
+          parseInt(countTotal?.total_visits || 0) + parseInt(countTotal?.sum_companions || 0)
         }})
       </div>
       <div class="col-6 col-md-2 btn btn-outline-success">
         تعداد کل خودرو ({{ parseInt(countTotal?.cars) }})
+      </div>
+      <div class="col-6 col-md-2">
+        <button class="btn btn-outline-success fo" @click="exportExcel" :disabled="isLoading">
+          <i v-if="isLoading" class="fa fa-spinner fa-spin"></i>
+          {{ isLoading ? 'در حال بارگذاری...' : 'گرفتن خروجی اکسل' }}
+        </button>
       </div>
     </div>
 
@@ -86,10 +91,7 @@
                 </select>
               </td>
               <td class="px-4 py-2 whitespace-nowrap" data-label="توضیحات">
-              <textarea
-                class="input-group border"
-                v-model="list.command"
-              ></textarea>
+                <textarea class="input-group border" v-model="list.command"></textarea>
               </td>
               <!-- پیام ورود -->
               <td class="px-4 py-2 whitespace-nowrap" data-label="پیام ورود">
@@ -190,12 +192,15 @@ import { computed, onMounted } from 'vue'
 import { toast } from 'vue3-toastify'
 import { DateTimeFa } from '../../../commons/helpers/data.js'
 
+let isLoading = $ref(false)
+
 let paginatetion = $ref([])
 let searchQuery = $ref('')
 let lists = $ref([])
 let url = $ref('visits')
 let countTotal = $ref()
 let command = $ref()
+let fileUrl = $ref()
 
 // Pagination
 const visiblePages = computed(() => {
@@ -210,18 +215,40 @@ const visiblePages = computed(() => {
   return pages
 })
 
+async function exportExcel() {
+    isLoading = true
+  let fileUrl = await getExcel();
+
+  let link = document.createElement('a')
+  link.href = fileUrl
+  link.download = `event_${Math.floor(Math.random() * 10000000)}.xlsx`
+  link.click()
+  isLoading = false
+}
+
+async function getExcel() {
+  try {
+    const response = await ApiService.get('visits/export-excel')
+
+    if (response.status) {
+      return response.data.fileUrl
+    }
+  } catch (e) {
+    myErrors(e)
+  }
+}
+
 // دریافت داده
 async function getReports() {
   try {
     const response = await ApiService.get(url)
     if (response.status === 'true') {
-      // console.log(response.data[1]);
       countTotal = response.data[1]
       lists = response.data[0].data.map((item) => ({
         ...item,
         companions: item.companions || '',
         has_car: item.has_car || '',
-        command: item.command
+        command: item.command,
       }))
       makePaginatetion(response.data[0])
     }

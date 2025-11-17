@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class OtpController extends Controller
 {
 
-    public function __construct(public Responses $responses,)
+    public function __construct(public Responses $responses)
     {
     }
     /**
@@ -27,9 +27,9 @@ class OtpController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, AuthenticationService $authService): ?\Illuminate\Http\JsonResponse
+    public function store(Request $request, AuthenticationService $authService)
     {
-        return $authService->verifyOtp($request->all());
+        return $authService->login($request->all());
     }
 
     /**

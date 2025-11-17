@@ -8,17 +8,16 @@ import notFound from "@/commons/views/NotFound.vue";
 const routes = [
     ...AdminRoute,
     {
-        path: '/',
-        name: 'home',
+        path: '/home',
+        name: 'Home',
         meta: {layout: layout_home},
-        // beforeEnter: guards.AuthUser,
+        beforeEnter: guards.AuthUser,
         component: () => import('@/Home/views/homes/index.vue')
     },
       {
-        path: '/login',
+        path: '/',
         name: 'login',
         meta: {layout: layout_home},
-        // beforeEnter: guards.AuthUser,
         component: () => import('@/Home/views/Login/index.vue')
     },
     {

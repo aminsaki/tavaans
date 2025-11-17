@@ -181,7 +181,7 @@
   &quot;keyToString&quot;: {
     &quot;Pest.Main.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/amin/Desktop/sites/tavaan/tavaanFront/src/commons/helpers&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/amin/Desktop/sites/tavaan/tavaanFront/src/commons/components/Layouts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -198,11 +198,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tavaanFront/src/commons/components/Layouts" />
+      <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src/traits" />
       <recent name="$PROJECT_DIR$/tavaanFront/src/commons/helpers" />
       <recent name="$PROJECT_DIR$/tavaanBackend/config" />
       <recent name="$PROJECT_DIR$/tavaanBackend" />
-      <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/databases" />
-      <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src" />
@@ -218,9 +218,6 @@
     <configuration name="Main" type="PestRunConfigurationType">
       <option name="pestRunnerSettings">
         <PestRunner configuration_file="$PROJECT_DIR$/tavaanBackend/phpunit.xml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
-      </option>
-      <option name="runnerSettings">
-        <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/tavaanBackend/phpunit.xml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       </option>
       <method v="2" />
     </configuration>
@@ -250,7 +247,9 @@
       <workItem from="1763066713293" duration="4480000" />
       <workItem from="1763092735441" duration="23436000" />
       <workItem from="1763136849295" duration="2294000" />
-      <workItem from="1763224752610" duration="4811000" />
+      <workItem from="1763224752610" duration="5584000" />
+      <workItem from="1763327781790" duration="4436000" />
+      <workItem from="1763354278750" duration="4658000" />
     </task>
     <servers />
   </component>
@@ -264,6 +263,11 @@
           <url>file://$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src/traits/ExcelTrait.php</url>
           <line>12</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src/traits/ReportsTraitExcel.php</url>
+          <line>38</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

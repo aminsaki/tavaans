@@ -1,53 +1,88 @@
 <template>
-  <div class="w-full   justify-content-center d-flex">
-    <div class="card shadow-lg glass rounded-2xl overflow-hidden">
-      <div class="card-body p-0">
-        <!-- header -->
-        <div class="p-5 text-center border-b border-gray-200">
-          <h1 class="h4 mb-1 font-medium">خوش‌آمدید</h1>
-          <p class="text-muted mb-0">برای ادامه وارد حساب‌کاربری شوید</p>
-        </div>
-        <!-- form -->
-        <form id="loginForm" class="p-5" novalidate>
-          <!-- ایمیل -->
-          <div class="mb-4">
-            <label for="email" class="form-label">ایمیل</label>
-            <input type="email"
-                   class="form-control rounded-md py-2"
-                   id="email"
-                   name="email"
-                   placeholder="example@domain.com"
-                   required
-                   aria-describedby="emailHelp">
-            <div class="invalid-feedback">لطفاً یک ایمیل معتبر وارد کنید.</div>
-          </div>
-          <!-- گذرواژه -->
-          <div class="mb-3">
-            <label for="password" class="form-label">گذرواژه</label>
-            <div class="input-group">
-              <input type="password"
-                     class="form-control rounded-start-md py-2"
-                     id="password"
-                     name="password"
-                     placeholder="••••••••"
-                     required minlength="6" />
+  <div class="min-h-screen bg-light d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg border-0 rounded-3 p-0 w-100" style="max-width: 420px;">
 
-            </div>
-          </div>
-          <!-- دکمه ورود -->
-          <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-primary btn-lg rounded-md">ورود</button>
-          </div>
-
-        </form>
+      <!-- Header -->
+      <div class="p-4 text-center border-bottom">
+        <h1 class="h4 mb-1 fw-bold">خوش‌آمدید</h1>
+        <p class="text-muted mb-0">برای ادامه وارد حساب‌کاربری شوید</p>
       </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="p-4" novalidate>
+
+        <!-- mobile -->
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">شماره موبایل</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+             v-model="from.mobile"
+            class="form-control rounded-md py-2"
+            placeholder="09100000000"
+            required
+          />
+        </div>
+
+        <!-- پسورد -->
+        <div class="mb-3">
+          <label for="password" class="form-label fw-semibold">گذرواژه</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control rounded-md py-2"
+            placeholder="••••••••"
+            minlength="6"
+            required
+            v-model="from.password"
+          />
+        </div>
+
+        <!-- Button -->
+        <button type="button" @click="btn_login()" class="btn btn-primary form-control btn-danger" :disabled="loading">
+              <span v-if="loading">
+                     <LoadingSpinner/>
+               </span>
+                <span v-else>ورود
+                </span>
+              </button>
+
+      </form>
     </div>
   </div>
-
 </template>
 
 <script setup>
 
+
+import {myErrors} from "@/commons/helpers/errors.js";
+import {toast} from "vue3-toastify";
+import LoadingSpinner from "@/commons/components/LoadingSpinner.vue";
+import {reactive} from "vue";
+import {$ref} from "unplugin-vue-macros/macros";
+let loading = $ref(false)
+import axios from "axios";
+const from = reactive({
+    mobile: "",
+    password: "",
+})
+async function btn_login() {
+  loading =true;
+    try {
+        const response = await axios.post('authentications', from);
+        const {status, data, messages} = response.data;
+        if (status === 'true') {
+          loading = false;
+            localStorage.setItem('users', JSON.stringify(data.list));
+            localStorage.setItem('token', data.access_token);
+            toast.success(messages);
+            window.location.replace('/home');
+        }
+    } catch (error) {
+      loading = false;
+        myErrors(error)
+    }
+}
 </script>
-
-

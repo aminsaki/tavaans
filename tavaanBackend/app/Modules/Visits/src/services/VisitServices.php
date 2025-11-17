@@ -8,11 +8,12 @@ use Carbon\Carbon;
 use holoo\modules\Bases\Helper\Responses;
 use holoo\modules\Bases\servers\sms\adapter\mediana\MedianaSmsGateway;
 use holoo\modules\Visits\Repositories\VisitInteface;
+use holoo\modules\Visits\traits\ReportsTraitExcel;
 use Illuminate\Support\Facades\DB;
 
 class VisitServices
 {
-    use  ExcelTrait;
+    use  ExcelTrait ,  ReportsTraitExcel;
 
     public function __construct(protected Responses $response, protected VisitInteface $visits, protected MedianaSmsGateway $smsGateway)
     {
@@ -108,4 +109,8 @@ class VisitServices
 
         return $this->response->success('', trans('validation.success'));
     }
+     public function excels(): \Illuminate\Http\JsonResponse
+     {
+        return   $this->exportExcel(Visits::all());
+     }
 }
