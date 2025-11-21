@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import layout_home from '@/commons/components/Layouts/homes.vue'
+import layout_Login from '@/commons/components/Layouts/login.vue'
 import * as guards from './guard.js'
 import { AdminRoute } from './routeAdmin.js'
 import notFound from '@/commons/views/NotFound.vue'
@@ -16,7 +17,7 @@ const routes = [
   {
     path: '/',
     name: 'login',
-    meta: { layout: layout_home },
+    meta: { layout: layout_Login },
     component: () => import('@/Home/views/Login/index.vue'),
   },
   {
