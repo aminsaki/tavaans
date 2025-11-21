@@ -3,6 +3,7 @@
 namespace holoo\modules\Visits;
 
 use holoo\modules\Authentications\Middleware\PhoneThrottle;
+use holoo\modules\Visits\Repositories\ConfigInteface;
 use holoo\modules\Visits\Repositories\VisitInteface;
 use holoo\modules\Visits\Repositories\VisitsRepositories;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +12,7 @@ use Illuminate\Support\ServiceProvider;
 class VisitsServiceProvider extends ServiceProvider
 {
     /**
-     * Make config punishment optional by merging the config from the package.
+     * Make Config punishment optional by merging the Config from the package.
      */
 
     public function register(): void

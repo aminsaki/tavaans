@@ -19,7 +19,8 @@ class Visits extends Model
        'entry_time',
        'exit_time',
        'command',
-       'statusSms'
+       'statusSms',
+        'cat_id'
    ];
 
     protected $casts = [

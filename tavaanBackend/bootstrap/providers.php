@@ -4,5 +4,7 @@ return [
     App\Providers\AppServiceProvider::class,
     modules\Bases\BaseServiceProvider::class,
     modules\Authentications\AuthenticationServiceProvider::class,
-    modules\Visits\VisitsServiceProvider::class,
+    modules\Config\ConfigServiceProvider::class,
+    modules\Visits\visitsServiceProvider::class,
+
 ];

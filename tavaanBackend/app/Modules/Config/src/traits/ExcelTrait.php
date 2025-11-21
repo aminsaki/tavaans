@@ -2,7 +2,6 @@
 
 namespace App\Modules\Visits\src\traits;
 
-use App\Models\Cat;
 use App\Modules\Visits\src\Models\Visits;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -19,25 +18,11 @@ trait ExcelTrait
         foreach ($rows as $index => $row) {
             if ($index === 0) continue;
 
-        $categoryName = trim($row[3] ?? '');
-
-           $categoryId = null;
-        if (!empty($categoryName)) {
-
-            $category = Cat::firstOrCreate(
-                ['name' => $categoryName]
-            );
-
-            $categoryId = $category->id;
-        }
-
             Visits::create([
                 'fullName' => $row[0] ?? '',
                 'phone' => $row[1] ?? '',
                 'command' => $row[2] ?? '',
-                'cat_id'  => $categoryId,
             ]);
-
         }
 
         return true;

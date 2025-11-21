@@ -1,26 +1,26 @@
 <?php
 
-namespace holoo\modules\Authentications;
+namespace holoo\modules\Config;
 
-
-use App\Modules\Authentications\src\Repositories\AuthsInterface;
-use App\Modules\Authentications\src\Repositories\AuthsRepository;
 use holoo\modules\Authentications\Middleware\PhoneThrottle;
+use holoo\modules\Config\Repositories\ConfigInteface;
+use holoo\modules\Config\Repositories\ConfigRepositories;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-
-class AuthenticationServiceProvider extends ServiceProvider
+class ConfigServiceProvider extends ServiceProvider
 {
     /**
      * Make Config punishment optional by merging the Config from the package.
      */
+
     public function register(): void
     {
-
-        $this->app->bind(AuthsInterface::class, AuthsRepository::class);
+        $this->app->bind(
+            ConfigInteface::class,
+            ConfigRepositories::class
+        );
     }
-
 
     /**
      * Publishes configuration file.
@@ -41,6 +41,6 @@ class AuthenticationServiceProvider extends ServiceProvider
 
     protected function getMigrationsFrom(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../databases/migrations');
     }
 }

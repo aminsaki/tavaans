@@ -28,7 +28,7 @@ class BaseServiceProvider extends ServiceProvider
     }
 
     /**
-     * Make config punishment optional by merging the config from the package.
+     * Make Config punishment optional by merging the Config from the package.
      */
     public
     function register(): void

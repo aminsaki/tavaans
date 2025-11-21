@@ -10,7 +10,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" synchronizationState="DONT_SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/tavaanBackend/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -20,6 +20,9 @@
         <option value="Vue Composition API Component" />
       </list>
     </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/tavaanBackend/app/Modules/Config/src/routes/api.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP Herd">
     <include_path>
@@ -181,7 +184,7 @@
   &quot;keyToString&quot;: {
     &quot;Pest.Main.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/amin/Desktop/sites/tavaan/tavaanFront/src/commons/components/Layouts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/amin/Desktop/sites/tavaan/tavaanBackend/app/Modules&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -198,13 +201,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules" />
       <recent name="$PROJECT_DIR$/tavaanFront/src/commons/components/Layouts" />
       <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src/traits" />
       <recent name="$PROJECT_DIR$/tavaanFront/src/commons/helpers" />
       <recent name="$PROJECT_DIR$/tavaanBackend/config" />
-      <recent name="$PROJECT_DIR$/tavaanBackend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Config/databases/migrations" />
       <recent name="$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src" />
       <recent name="$PROJECT_DIR$/tavaanFront/src/commons" />
       <recent name="$PROJECT_DIR$/tavaanFront/src/Home" />
@@ -218,6 +222,9 @@
     <configuration name="Main" type="PestRunConfigurationType">
       <option name="pestRunnerSettings">
         <PestRunner configuration_file="$PROJECT_DIR$/tavaanBackend/phpunit.xml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
+      </option>
+      <option name="runnerSettings">
+        <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/tavaanBackend/phpunit.xml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       </option>
       <method v="2" />
     </configuration>
@@ -249,7 +256,13 @@
       <workItem from="1763136849295" duration="2294000" />
       <workItem from="1763224752610" duration="5584000" />
       <workItem from="1763327781790" duration="4436000" />
-      <workItem from="1763354278750" duration="4658000" />
+      <workItem from="1763354278750" duration="5909000" />
+      <workItem from="1763502436098" duration="10000" />
+      <workItem from="1763585606576" duration="5062000" />
+      <workItem from="1763616608571" duration="4561000" />
+      <workItem from="1763640498680" duration="2882000" />
+      <workItem from="1763672381503" duration="6241000" />
+      <workItem from="1763704563122" duration="4614000" />
     </task>
     <servers />
   </component>
@@ -261,7 +274,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/tavaanBackend/app/Modules/Visits/src/traits/ExcelTrait.php</url>
-          <line>12</line>
+          <line>13</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

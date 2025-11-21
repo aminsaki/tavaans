@@ -18657,7 +18657,7 @@
                 function pn(e, t) {
                     if (null !== t) {
                         var n, i = sn;
-                        if (t.abbr = e, null != dn[e]) S("defineLocaleOverride", "use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info."), i = dn[e]._config; else if (null != t.parentLocale) if (null != dn[t.parentLocale]) i = dn[t.parentLocale]._config; else {
+                        if (t.abbr = e, null != dn[e]) S("defineLocaleOverride", "use moment.updateLocale(localeName, Config) to change an existing locale. moment.defineLocale(localeName, Config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info."), i = dn[e]._config; else if (null != t.parentLocale) if (null != dn[t.parentLocale]) i = dn[t.parentLocale]._config; else {
                             if (null == (n = fn(t.parentLocale))) return cn[t.parentLocale] || (cn[t.parentLocale] = []), cn[t.parentLocale].push({
                                 name: e,
                                 config: t

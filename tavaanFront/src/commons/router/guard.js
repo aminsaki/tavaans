@@ -1,4 +1,4 @@
-// Import the config.json file
+// Import the Config.json file
 import config from '../../../config/pages.json';
 
 // export const paranGuards = (to, from, next) => {
@@ -11,8 +11,8 @@ import config from '../../../config/pages.json';
 //         let userRole = user.roles[0].name
 //         let pathSegments = to.path.split('/');
 //
-//         let pageData = config.pages[pathSegments[3]];
-//         let dashboard = config.pages[pathSegments[2]];
+//         let pageData = Config.pages[pathSegments[3]];
+//         let dashboard = Config.pages[pathSegments[2]];
 //
 //
 //         if (pageData ) {

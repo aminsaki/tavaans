@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid mx-auto p-4">
-    <div class="container d-flex gap-2 justify-content-end">
+    <div class="row d-flex">
       <div class="col-6 col-md-2 btn btn-outline-primary">
         تعداد کل نفرات ({{
           parseInt(countTotal?.total_visits || 0) + parseInt(countTotal?.sum_companions || 0)
@@ -9,25 +9,30 @@
       <div class="col-6 col-md-2 btn btn-outline-success">
         تعداد کل خودرو ({{ parseInt(countTotal?.cars) }})
       </div>
-      <div class="col-6 col-md-2">
+      <div class="col-2 col-md-2">
         <button class="btn btn-outline-success fo" @click="exportExcel" :disabled="isLoading">
           <i v-if="isLoading" class="fa fa-spinner fa-spin"></i>
           {{ isLoading ? 'در حال بارگذاری...' : 'گرفتن خروجی اکسل' }}
         </button>
       </div>
     </div>
-
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
       <!-- فرم سرچ -->
       <div class="p-3 border-bottom">
         <form class="row g-2 align-items-center" @submit.prevent="onSearch">
           <div class="col-12 col-md-6 justify-start">
             <input
-              v-model="searchQuery"
+              v-model="data.searchQuery"
               type="text"
               class="form-control w-full"
               placeholder="  جستجو بر اساس نام و شماره تماس  "
             />
+          </div>
+          <div class="col-2 col-md-2 d-flex gap-2 justify-content-start justify-content-md-end">
+            <select v-model="data.select" @change="onSearch">
+              <option value="0">تست اول</option>
+              <option value="1">تست دوم</option>
+            </select>
           </div>
           <div class="col-5 col-md-2 d-flex gap-2 justify-content-start justify-content-md-end">
             <button
@@ -188,19 +193,17 @@
 import { $ref } from 'unplugin-vue-macros/macros'
 import ApiService from '@/commons/servers/ApiService.js'
 import { myErrors } from '@/commons/helpers/errors.js'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { toast } from 'vue3-toastify'
 import { DateTimeFa } from '../../../commons/helpers/data.js'
 
 let isLoading = $ref(false)
-
 let paginatetion = $ref([])
 let searchQuery = $ref('')
 let lists = $ref([])
 let url = $ref('visits')
 let countTotal = $ref()
 let command = $ref()
-let fileUrl = $ref()
 
 // Pagination
 const visiblePages = computed(() => {
@@ -215,9 +218,14 @@ const visiblePages = computed(() => {
   return pages
 })
 
+const data = reactive({
+  searchQuery: '',
+  select: '',
+})
+
 async function exportExcel() {
-    isLoading = true
-  let fileUrl = await getExcel();
+  isLoading = true
+  let fileUrl = await getExcel()
 
   let link = document.createElement('a')
   link.href = fileUrl
@@ -301,7 +309,7 @@ function foreachPaginateUsers(page) {
 // جستجو
 async function onSearch() {
   try {
-    const response = await ApiService.post('serachVisits', [{ data: searchQuery }])
+    const response = await ApiService.post('serachVisits', [{ data: data }])
     if (response.status === 'true') {
       lists = response.data.data.map((item) => ({
         ...item,
@@ -325,6 +333,10 @@ onMounted(() => getReports())
 </script>
 
 <style scoped>
+textarea {
+  position: initial;
+}
+
 @media (max-width: 576px) {
   .mobile-table thead {
     display: none;

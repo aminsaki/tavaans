@@ -44,9 +44,11 @@ class VisitServices
 
     public function serachVisits($data)
     {
-
-        $serachData = $data[0]['data'];
+          $request =$data[0]['data'];
+         $serachData = $request['searchQuery'];
+         $select = $request['select'];
         $query = Visits::query()
+            ->where('cat_id',$select)
             ->when($data, function ($q) use ($serachData) {
                 $q->where('fullName', 'like', "%{$serachData}%")
                     ->orWhere('phone', 'like', "%{$serachData}%");
@@ -75,13 +77,15 @@ class VisitServices
         if (!$visit) {
             return $this->response->notFound('', trans('validation.notFound'));
         }
-//
-        if ($method === 'entry_time' && empty($visit->entry_time)) {
-
-            $parameters = [
+              $parameters = [
                 'code' => '806755',
                 'name' => $visit->fullName,
             ];
+
+//
+        if ($method === 'entry_time' && empty($visit->entry_time)) {
+
+
             $visit->update([
                 'companions' => $companions,
                 'has_car' => $has_car,
@@ -92,22 +96,19 @@ class VisitServices
         }
         if ($method === 'exit_time' && empty($visit->exit_time)) {
 
-            $parameters = [
-                'code' => '806756',
-                'name' => $visit->fullName,
-            ];
-            $visit->update([
-                'companions' => $companions,
-                'has_car' => $has_car,
-                'exit_time' => $exit_time,
-                'command' => $command,
-            ]);
+//
+//            $visit->update([
+//                'companions' => $companions,
+//                'has_car' => $has_car,
+//                'exit_time' => $exit_time,
+//                'command' => $command,
+//            ]);
         }
         if ($parameters && !empty($visit->phone)) {
             $this->smsGateway->sendPattern($visit->phone, $parameters);
         }
 
-        return $this->response->success('', trans('validation.success'));
+//        return $this->response->success('', trans('validation.success'));
     }
      public function excels(): \Illuminate\Http\JsonResponse
      {

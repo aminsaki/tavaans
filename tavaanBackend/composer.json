@@ -32,7 +32,9 @@
             "Database\\Seeders\\": "database/seeders/",
             "holoo\\modules\\Bases\\": "app/Modules/Bases/src/",
             "holoo\\modules\\Authentications\\": "app/Modules/Authentications/src/",
-            "holoo\\modules\\Visits\\": "app/Modules/Visits/src/"
+            "holoo\\modules\\Visits\\": "app/Modules/Visits/src/",
+            "holoo\\modules\\Config\\": "app/Modules/Config/src/"
+
 
         }
     },

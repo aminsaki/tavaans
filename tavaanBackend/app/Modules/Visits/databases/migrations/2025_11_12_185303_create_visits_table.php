@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('entry_time')->nullable(); // زمان ورود
             $table->timestamp('exit_time')->nullable();  // زمان خروج
             $table->text('command');
+            $table->text('cat_id');
             $table->enum('statusSms', ['true', 'false'])->default('false');
             $table->timestamps();
         });

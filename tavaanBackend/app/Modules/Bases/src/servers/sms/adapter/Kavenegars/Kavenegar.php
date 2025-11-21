@@ -17,7 +17,7 @@ class Kavenegar extends SmsAbstract implements SmsInterface
     private $insecure = false;
 
     /**
-     * This file passes the items to the item variables before calling the settings that you read from the config folder
+     * This file passes the items to the item variables before calling the settings that you read from the Config folder
      * ParsgreenSms constructor.
      */
     public function __construct()

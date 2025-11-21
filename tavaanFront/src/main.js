@@ -9,14 +9,14 @@ import "@/commons/assets/css/iransans.css"
 import Toast from "vue-toastification";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './assets/tailwind.css'
-
+import "@/commons/assets/fonts/fontawesome-free/css/all.css"
 /// bootstrap
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-// import webUrl from "../config/dev.json"
- import webUrl from "../config/prod.json";
+import webUrl from "../config/dev.json"
+ // import webUrl from "../Config/prod.json";
 
 let token = localStorage.getItem('token');
 const options = {
