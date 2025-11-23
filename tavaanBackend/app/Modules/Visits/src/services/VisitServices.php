@@ -2,6 +2,7 @@
 
 namespace App\Modules\Visits\src\services;
 
+use App\Models\Cat;
 use App\Modules\Visits\src\Models\Visits;
 use App\Modules\Visits\src\traits\ExcelTrait;
 use Carbon\Carbon;
@@ -22,14 +23,13 @@ class VisitServices
     {
 
       if($reports = $this->visits->myPaginates(20)) {
-
             $count = DB::table('visits')
                 ->where(['statusSms'=>'true'])
                 ->selectRaw('COUNT(has_car) as cars, COUNT(*) as total_visits, SUM(companions) as sum_companions, SUM(1 + companions) as sum_total_with_companions')
                 ->first();
 
             return $this->response->success(
-                [$reports, $count],
+                [$reports, $count , Cat::all()],
                 trans('validation.success'));
         }
         return $this->response->notFound('', trans('validation.notFound'));
@@ -41,24 +41,20 @@ class VisitServices
         return $this->importExcel($data);
 
     }
-
-    public function serachVisits($data)
+    public function serachVisits($request)
     {
-          $request =$data[0]['data'];
-         $serachData = $request['searchQuery'];
-         $select = $request['select'];
+        $search = $request['searchQuery'];
+        $select = $request['select'];
+
         $query = Visits::query()
-            ->where('cat_id',$select)
-            ->when($data, function ($q) use ($serachData) {
-                $q->where('fullName', 'like', "%{$serachData}%")
-                    ->orWhere('phone', 'like', "%{$serachData}%");
-            })->paginate(150);
+            ->where('cat_id', $select)
+            ->where(function ($q) use ($search) {
+                $q->where('fullName', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            })
+            ->paginate(150);
 
-        if ($query) {
-            return $this->response->success($query, trans('validation.success'));
-        }
-        return $this->response->notFound('', trans('validation.notFound'));
-
+        return $this->response->success($query, trans('validation.success'));
     }
 
     public function update(array $data)

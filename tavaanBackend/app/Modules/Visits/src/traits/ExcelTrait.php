@@ -4,6 +4,7 @@ namespace App\Modules\Visits\src\traits;
 
 use App\Models\Cat;
 use App\Modules\Visits\src\Models\Visits;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 trait ExcelTrait
@@ -16,12 +17,12 @@ trait ExcelTrait
         $sheet = $spreadsheet->getActiveSheet();
         $rows = $sheet->toArray();
 
+
         foreach ($rows as $index => $row) {
             if ($index === 0) continue;
 
         $categoryName = trim($row[3] ?? '');
-
-           $categoryId = null;
+        $categoryId = null;
         if (!empty($categoryName)) {
 
             $category = Cat::firstOrCreate(
@@ -30,6 +31,7 @@ trait ExcelTrait
 
             $categoryId = $category->id;
         }
+                     Log::info("categoryId=".$categoryId);
 
             Visits::create([
                 'fullName' => $row[0] ?? '',

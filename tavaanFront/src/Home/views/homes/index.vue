@@ -29,9 +29,9 @@
             />
           </div>
           <div class="col-2 col-md-2 d-flex gap-2 justify-content-start justify-content-md-end">
-            <select v-model="data.select" @change="onSearch">
-              <option value="0">تست اول</option>
-              <option value="1">تست دوم</option>
+            <select v-model="data.select" @change="onSearch" class="form-control  form-select ">
+              <option value="" disabled>لطفا یک رواید را انتخاب کنید</option>
+              <option  v-for="cat in cats" :value="cat.id">{{cat.name}}</option>
             </select>
           </div>
           <div class="col-5 col-md-2 d-flex gap-2 justify-content-start justify-content-md-end">
@@ -59,6 +59,7 @@
               <th class="px-4 py-2 text-gray-700">پیام خروجی</th>
             </tr>
           </thead>
+
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="(list, index) in lists" :key="list.id" class="hover:bg-gray-50">
               <!-- نام و نام‌خانوادگی -->
@@ -204,6 +205,7 @@ let lists = $ref([])
 let url = $ref('visits')
 let countTotal = $ref()
 let command = $ref()
+ let cats = $ref();
 
 // Pagination
 const visiblePages = computed(() => {
@@ -251,8 +253,9 @@ async function getReports() {
   try {
     const response = await ApiService.get(url)
     if (response.status === 'true') {
-      countTotal = response.data[1]
-      lists = response.data[0].data.map((item) => ({
+       cats = response.data[2];
+       countTotal = response.data[1]
+       lists = response.data[0].data.map((item) => ({
         ...item,
         companions: item.companions || '',
         has_car: item.has_car || '',
@@ -305,21 +308,25 @@ function foreachPaginateUsers(page) {
   url = `visits?page=${page}`
   getReports()
 }
-
 // جستجو
 async function onSearch() {
   try {
-    const response = await ApiService.post('serachVisits', [{ data: data }])
+
+    const response = await ApiService.post('serachVisits', {
+      searchQuery: data.searchQuery,
+      select: data.select,
+    });
+
     if (response.status === 'true') {
       lists = response.data.data.map((item) => ({
         ...item,
         companions: item.companions || '',
         has_car: item.has_car || '',
-      }))
-      makePaginatetion(response.data)
+        command: item.command,
+      }));
     }
   } catch (e) {
-    myErrors(e)
+    myErrors(e);
   }
 }
 
